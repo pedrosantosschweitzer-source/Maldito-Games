@@ -125,29 +125,3 @@ Cada aluno que contribuir para este projeto faz parte de sua construção
 histórica. Por isso, é importante desenvolver pensando em quem dará
 continuidade depois.
 
-------------------------------------------------------------------------
-
-## Proposta de Evolução por Etapas
-
-Primeira etapa: - Estrutura inicial do projeto - Cadastro de produtos -
-Cadastro de clientes
-
-Segunda etapa: - Implementação de vendas - Integração entre entidades -
-Atualização automática de estoque
-
-Terceira etapa: - Relatórios de vendas e estoque - Melhorias estruturais
-
-Quarta etapa: - Sistema de autenticação - Controle de permissões -
-Refinamento geral do sistema
-
-------------------------------------------------------------------------
-
-## Considerações Finais
-
-Este projeto representa mais do que uma atividade escolar. Ele é uma
-oportunidade de aplicar conhecimentos técnicos de forma prática,
-desenvolver responsabilidade com código coletivo e aprender a trabalhar
-em um ambiente colaborativo.
-
-Se você está assumindo o projeto agora, leia atentamente este documento,
-explore o código e continue construindo sobre o que já foi feito.
