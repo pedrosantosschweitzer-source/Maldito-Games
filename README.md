@@ -1,173 +1,153 @@
-                                          ╔══════════════════════════════════════════════╗
-                                          ║              SISTEMA DE LOJA                ║
-                                          ╚══════════════════════════════════════════════╝
-Sistema para gerenciamento de operações comerciais
-Modelagem orientada a entidades e controle transacional
+# Sistema de Loja
 
-▌1 ▪ VISÃO GERAL DO SISTEMA
+## Apresentação do Projeto
 
-════════════════════════════════
+Este projeto consiste no desenvolvimento de um Sistema de Loja com fins
+educacionais, elaborado por alunos do 3º ano do Ensino Médio Técnico. O
+objetivo principal é simular o funcionamento de um sistema comercial
+real, aplicando conceitos fundamentais de programação, banco de dados e
+modelagem de sistemas.
 
-O Sistema de Loja é uma aplicação desenvolvida para gerenciar o fluxo operacional de uma loja comercial, contemplando controle de produtos, estoque, clientes, vendas e pagamentos.
+O projeto será desenvolvido de forma contínua ao longo do ano, com
+rodízio de alunos a cada bimestre. Dessa forma, a organização, clareza e
+documentação adequada tornam-se elementos essenciais para garantir a
+continuidade e evolução do sistema.
 
-──────────────────────────────
-OBJETIVOS PRINCIPAIS
-──────────────────────────────
+Este repositório não representa apenas código, mas também um ambiente de
+aprendizado colaborativo.
 
-Centralizar dados comerciais
+------------------------------------------------------------------------
 
-Garantir integridade e consistência das informações
+## Objetivo Geral
 
-Automatizar processos operacionais
+Desenvolver um sistema capaz de:
 
-Reduzir inconsistências manuais
+-   Realizar cadastro de produtos
+-   Gerenciar controle de estoque
+-   Cadastrar clientes
+-   Registrar vendas
+-   Processar pagamentos
+-   Permitir futura expansão com relatórios e controle de usuários
 
-Permitir rastreabilidade de transações
+O sistema deve ser estruturado de maneira organizada, permitindo que
+novos alunos compreendam rapidamente sua lógica e possam dar
+continuidade ao desenvolvimento.
 
-──────────────────────────────
-ESCOPO FUNCIONAL
-──────────────────────────────
+------------------------------------------------------------------------
 
-✓ Cadastro de produtos
-✓ Controle de estoque com atualização automática
-✓ Registro de vendas
-✓ Associação venda ⇄ cliente
-✓ Registro de pagamentos
-✓ Estrutura para relatórios gerenciais
+## Motivação
 
-──────────────────────────────
-PADRÕES E CONCEITOS APLICADOS
-──────────────────────────────
+O tema foi escolhido por sua relevância prática e por permitir a
+aplicação de diversos conteúdos técnicos aprendidos no curso.
 
-{ CRUD }
-{ Modelagem Relacional }
-{ Integridade Referencial }
-{ Regras de Negócio }
-{ Arquitetura em Camadas }
+Sistemas comerciais estão presentes em praticamente todos os
+estabelecimentos. Trabalhar com esse modelo permite compreender:
 
-▌2 ▪ JUSTIFICATIVA TÉCNICA
+-   Estruturação de banco de dados
+-   Relacionamento entre entidades
+-   Organização de código
+-   Separação de responsabilidades no sistema
+-   Boas práticas de documentação
 
-════════════════════════════════
+Além disso, o formato com rodízio de desenvolvedores simula um cenário
+próximo ao ambiente profissional, onde diferentes pessoas contribuem
+para o mesmo projeto ao longo do tempo.
 
-O domínio de gestão comercial foi escolhido por permitir aplicação prática de fundamentos essenciais da Engenharia de Software e Banco de Dados.
+------------------------------------------------------------------------
 
-──────────────────────────────
-CONCEITOS EXPLORADOS
-──────────────────────────────
+## Previsão de Entidades do Sistema
 
-→ Relacionamentos 1:N
-→ Relacionamentos N:N
-→ Normalização de dados
-→ Controle transacional
-→ Separação de responsabilidades
-→ Estruturação orientada a entidades
+A seguir estão as principais entidades previstas para o sistema:
 
-──────────────────────────────
-MOTIVAÇÃO
-──────────────────────────────
+### Produto
 
-= Domínio amplamente utilizado no mercado
-= Complexidade controlada e escalável
-= Facilidade de expansão futura
-= Aplicável a cenários reais
+-   idProduto
+-   nome
+-   descricao
+-   preco
+-   quantidadeEstoque
+-   categoria
 
-▌3 ▪ MODELAGEM PREVISTA
+### Cliente
 
-════════════════════════════════
+-   idCliente
+-   nome
+-   cpf
+-   telefone
+-   email
+-   endereco
 
-Abaixo estão as entidades inicialmente definidas no modelo conceitual.
+### Venda
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-▌ PRODUTO
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+-   idVenda
+-   data
+-   valorTotal
+-   idCliente
+-   statusPagamento
 
-{
-id : PK
-nome
-descricao
-preco
-quantidade_estoque
-categoria_id : FK
-}
+### ItemVenda
 
-Relacionamento:
-Produto (N) ──── (1) Categoria
+-   idItemVenda
+-   idVenda
+-   idProduto
+-   quantidade
+-   subtotal
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-▌ CLIENTE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+### Pagamento
 
-{
-id : PK
-nome
-cpf
-email
-telefone
-endereco
-}
+-   idPagamento
+-   idVenda
+-   formaPagamento
+-   valorPago
+-   dataPagamento
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-▌ VENDA
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+### Funcionario (evolução futura)
 
-{
-id : PK
-data_venda
-cliente_id : FK
-valor_total
-}
+-   idFuncionario
+-   nome
+-   cargo
+-   login
+-   senha
 
-Relacionamento:
-Cliente (1) ──── (N) Venda
+------------------------------------------------------------------------
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-▌ ITEM_VENDA
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## Organização e Continuidade
 
-{
-id : PK
-venda_id : FK
-produto_id : FK
-quantidade
-preco_unitario
-}
+Como o projeto terá troca de alunos a cada bimestre, algumas diretrizes
+são fundamentais:
 
-Relacionamentos:
-Venda (1) ──── (N) Item_Venda
-Produto (1) ──── (N) Item_Venda
+1.  Manter o código organizado e comentado quando necessário.
+2.  Realizar commits descritivos.
+3.  Atualizar este README sempre que houver alterações estruturais.
+4.  Garantir que o sistema permaneça funcional ao final de cada ciclo.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-▌ PAGAMENTO
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Cada aluno que contribuir para este projeto faz parte de sua construção
+histórica. Por isso, é importante desenvolver pensando em quem dará
+continuidade depois.
 
-{
-id : PK
-venda_id : FK
-tipo_pagamento
-valor
-status
-data_pagamento
-}
+------------------------------------------------------------------------
 
-Relacionamento:
-Venda (1) ──── (N) Pagamento
+## Proposta de Evolução por Etapas
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-▌ CATEGORIA
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Primeira etapa: - Estrutura inicial do projeto - Cadastro de produtos -
+Cadastro de clientes
 
-{
-id : PK
-nome
-descricao
-}
+Segunda etapa: - Implementação de vendas - Integração entre entidades -
+Atualização automática de estoque
 
-▌4 ▪ ESTRUTURA RELACIONAL (RESUMO)
+Terceira etapa: - Relatórios de vendas e estoque - Melhorias estruturais
 
-══════════════════════════════════════
+Quarta etapa: - Sistema de autenticação - Controle de permissões -
+Refinamento geral do sistema
 
-Cliente 1 ──────── N Venda
-Venda 1 ───────── N Item_Venda
-Produto 1 ─────── N Item_Venda
-Categoria 1 ───── N Produto
-Venda 1 ───────── N Pagamento
+------------------------------------------------------------------------
+
+## Considerações Finais
+
+Este projeto representa mais do que uma atividade escolar. Ele é uma
+oportunidade de aplicar conhecimentos técnicos de forma prática,
+desenvolver responsabilidade com código coletivo e aprender a trabalhar
+em um ambiente colaborativo.
+
+Se você está assumindo o projeto agora, leia atentamente este documento,
+explore o código e continue construindo sobre o que já foi feito.
