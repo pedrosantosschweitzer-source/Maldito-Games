@@ -124,7 +124,7 @@ Antes de começar, certifique-se de ter instalado:
 
 ---
 
-## 🗄️ Configuração do Banco de Dados
+##  Configuração do Banco de Dados
 
 ### 1. Criar o banco de dados
 
