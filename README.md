@@ -111,18 +111,117 @@ A seguir estão as principais entidades previstas para o sistema:
 -   senha
 
 ------------------------------------------------------------------------
+# COMO RODAR O SISTEMA
 
-## Organização e Continuidade
+##  Pré-requisitos
 
-Como o projeto terá troca de alunos a cada bimestre, algumas diretrizes
-são fundamentais:
+Antes de começar, certifique-se de ter instalado:
 
-1.  Manter o código organizado e comentado quando necessário.
-2.  Realizar commits descritivos.
-3.  Atualizar este README sempre que houver alterações estruturais.
-4.  Garantir que o sistema permaneça funcional ao final de cada ciclo.
+- **Java JDK 11 ou superior** (recomendado JDK 17)
+- **PostgreSQL 14 ou superior** (com pgAdmin opcional)
+- **Git** (opcional, para clonar o repositório)
+- **Uma IDE** (Eclipse, IntelliJ, VS Code ou NetBeans)
 
-Cada aluno que contribuir para este projeto faz parte de sua construção
-histórica. Por isso, é importante desenvolver pensando em quem dará
-continuidade depois.
+---
 
+## 🗄️ Configuração do Banco de Dados
+
+### 1. Criar o banco de dados
+
+Abra o **pgAdmin** ou o terminal `psql` e execute:
+
+```sql
+CREATE DATABASE Bemdito_Games;
+```
+
+### 2. Criar as tabelas
+
+Conecte-se ao banco Bemdito_Games e execute o script abaixo:
+```
+-- Tabela de produtos
+CREATE TABLE produtos (
+    id_produto SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    descricao TEXT,
+    preco DECIMAL(10,2) NOT NULL,
+    quantidade_estoque INTEGER NOT NULL,
+    categoria VARCHAR(50)
+);
+
+-- Tabela de clientes
+CREATE TABLE clientes (
+    id_cliente SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    cpf VARCHAR(14) UNIQUE NOT NULL,
+    telefone VARCHAR(15),
+    email VARCHAR(100),
+    endereco VARCHAR(200)
+);
+
+-- Tabela de funcionários
+CREATE TABLE funcionarios (
+    id_funcionario SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    cargo VARCHAR(50),
+    login VARCHAR(50) UNIQUE NOT NULL,
+    senha VARCHAR(100) NOT NULL
+);
+
+-- Tabela de vendas
+CREATE TABLE vendas (
+    id_venda SERIAL PRIMARY KEY,
+    data VARCHAR(20) NOT NULL,
+    valor_total DECIMAL(10,2) NOT NULL,
+    id_cliente INTEGER NOT NULL,
+    status_pagamento VARCHAR(30) NOT NULL
+);
+
+-- Tabela de pagamentos
+CREATE TABLE pagamentos (
+    id_pagamento SERIAL PRIMARY KEY,
+    id_venda INTEGER NOT NULL,
+    forma_pagamento VARCHAR(30) NOT NULL,
+    valor_pago DECIMAL(10,2) NOT NULL,
+    data_pagamento VARCHAR(20)
+);
+
+-- Tabela de itens de venda
+CREATE TABLE itens_venda (
+    id_item_venda SERIAL PRIMARY KEY,
+    id_venda INTEGER NOT NULL,
+    id_produto INTEGER NOT NULL,
+    quantidade INTEGER NOT NULL,
+    subtotal DECIMAL(10,2) NOT NULL
+);
+```
+obs:
+Você pode executar esse script no Query Tool do pgAdmin (botão direito no banco → Query Tool) ou via terminal com `psql -U postgres -d Bemdito_Games`.
+
+## 3. Importar o projeto no Eclipse
+
+1. Baixe o projeto do GitHub
+2. No Eclipse: File → Import → Existing Projects into Workspace
+3. Selecione a pasta do projeto
+
+## 4. Baixar o driver JDBC
+
+1. Acesse: https://jdbc.postgresql.org/download/
+2. Baixe o arquivo `postgresql-42.7.3.jar`
+3. Clique com botão direito no projeto → Build Path → Configure Build PathAba Libraries → Add External JARs
+4. Selecione o arquivo baixado
+5. Clique em Apply and Close
+
+## 5. Configurar a senha do banco
+
+Abra o arquivo `src/dao/DBConnection.java` e altere a senha para a sua:
+```
+this.connection = DriverManager.getConnection(
+    "jdbc:postgresql://localhost:5432/Bemdito_Games", 
+    "postgres",     // seu usuário
+    "SUA_SENHA"     // ← coloque sua senha do PostgreSQL aqui
+);
+```
+
+## 6. Executar
+
+Clique com botão direito em `main/App.java` → Run As → Java Application
